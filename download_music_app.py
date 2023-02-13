@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, make_response
+from flask import Flask, request, render_template, make_response, jsonify
 import requests
 import re
 import os
@@ -64,8 +64,11 @@ def download_audio():
 
 @app.route('/get_audio', methods=["GET"])
 def get_audio_title():
+    # Get the query parameters from the request
+    query_params = request.args
     try:
-        url = request.form['url']
+        # Access specific query parameters by key
+        url = query_params.get("url")
     except Exception as e:
         app.logger.error('Exception : {}'.format(str(e)))
         return "Error: request body not correct", 400
@@ -83,14 +86,17 @@ def get_audio_title():
     # Fetch the audio data from Youtube
     youtube_provider = YoutubeProvider("Youtube")
     try:
-        title = youtube_provider.get_youtube_url_info(url=url)
+        yt = youtube_provider.get_youtube_url_info(url=url)
     except Exception as e:
         app.logger.error('Exception : {}'.format(str(e)))
         return 'Error: Internal Server Error while getting the title', 500
 
+    title = ""
     # Return the music title
-    response = make_response(title)
-    return response, 200
+    if yt is not None and hasattr(yt, "title") and yt.title is not None:
+        title = yt.title
+
+    return jsonify({"title": "{}".format(title), "status": "success"})
 
 
 if __name__ == '__main__':
