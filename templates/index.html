@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>MP3 Downloader</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_io/favicon.ico') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+    <body>
+        <form id="download-form">
+            <img id="img-logo" src="{{ url_for('static', filename='favicon_io/android-chrome-192x192.png') }}" alt="logo" />
+            <h1>Music Downloader</h1>
+            <label for="url-input">URL:</label>
+            <input type="text" id="url-input" name="url" placeholder="Paste the URL">
+            <input type="submit" value="Download">
+        </form>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </body>
+</html>
+
