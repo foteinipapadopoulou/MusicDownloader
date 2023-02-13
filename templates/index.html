@@ -6,16 +6,21 @@
         <title>MP3 Downloader</title>
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_io/favicon.ico') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     </head>
     <body>
         <form id="download-form">
             <img id="img-logo" src="{{ url_for('static', filename='favicon_io/android-chrome-192x192.png') }}" alt="logo" />
-            <h1>Music Downloader</h1>
-            <label for="url-input">URL:</label>
-            <input type="text" id="url-input" name="url" placeholder="Paste the URL">
-            <input type="submit" value="Download">
+            <h1  class="mt-4">Music Downloader</h1>
+            <fieldset class="form-group row">
+                <label for="url-input"  class="form-label mt-3">URL:</label>
+                <input type="text" id="url-input" name="url" class="form-control"  aria-describedby="urlHelp"  placeholder="Paste the URL">
+                <small id="urlHelp" class="form-text text-muted">Copy and Paste the Youtube URL.</small>
+                <input type="submit" value="Download" class="btn btn-primary">
+            </fieldset>
         </form>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
 
