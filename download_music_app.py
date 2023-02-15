@@ -5,10 +5,12 @@ import re
 import os
 import logging
 
-from YoutubeProvider import YoutubeProvider
+from src.YoutubeProvider import YoutubeProvider
+from src.error import APIBadRequestError, APIInternalServerError, APIError
 
 app = Flask(__name__)
-logging.basicConfig(filename='../record.log', level=logging.DEBUG,
+script_path = os.path.dirname(os.path.realpath(__file__))
+logging.basicConfig(filename=script_path + '/logFile.log', filemode='a', level=logging.DEBUG,
                     format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
 ALLOWED_HOSTS = [
@@ -16,6 +18,7 @@ ALLOWED_HOSTS = [
     "www.youtube.com",
     "youtu.be"
 ]
+
 
 def validate_url(url):
     if not (url and url.strip()):
@@ -29,23 +32,6 @@ def validate_url(url):
     parsed_link = requests.utils.urlparse(url)
     if parsed_link.hostname not in ALLOWED_HOSTS:
         raise APIBadRequestError('Unallowed host in Url. Only Youtube is supported')
-
-
-class APIError(Exception):
-    """All custom API Exceptions"""
-    pass
-
-
-class APIBadRequestError(APIError):
-    """Bad Request Error Class."""
-    code = 400
-    description = "Bad request Error"
-
-
-class APIInternalServerError(APIError):
-    """Internal Server Error Class."""
-    code = 500
-    description = "Internal Server Error"
 
 
 @app.errorhandler(APIError)
