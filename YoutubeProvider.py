@@ -19,7 +19,7 @@ class YoutubeProvider:
 
         # download into working directory
         try:
-            return audio.download(output_path=join(dir,'output'),filename="test"), yt.title
+            return audio.download(), yt.title
         except:
             return 'Error: Failed to download audio from {}'.format(self.name), 500
 

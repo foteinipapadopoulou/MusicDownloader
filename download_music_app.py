@@ -1,3 +1,4 @@
+import sys
 import traceback
 from flask import Flask, request, render_template, make_response, jsonify
 import requests
@@ -12,7 +13,7 @@ from os.path import dirname, abspath, join
 dir = dirname(abspath(__file__))
 app = Flask(__name__)
 
-logging.basicConfig(filename=join(dir, 'output', 'logFile.log'), filemode='a', level=logging.DEBUG,
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG,
                     format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
 ALLOWED_HOSTS = [
