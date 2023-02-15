@@ -5,12 +5,14 @@ import re
 import os
 import logging
 
-from src.YoutubeProvider import YoutubeProvider
+from YoutubeProvider import YoutubeProvider
 from src.error import APIBadRequestError, APIInternalServerError, APIError
 
+from os.path import dirname, abspath, join
+dir = dirname(abspath(__file__))
 app = Flask(__name__)
-script_path = os.path.dirname(os.path.realpath(__file__))
-logging.basicConfig(filename=script_path + '/logFile.log', filemode='a', level=logging.DEBUG,
+
+logging.basicConfig(filename=join(dir, 'output', 'logFile.log'), filemode='a', level=logging.DEBUG,
                     format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
 ALLOWED_HOSTS = [
@@ -46,6 +48,18 @@ def handle_exception(err):
     return jsonify(response), err.code
 
 
+@app.errorhandler(500)
+def handle_unknown_exception(err):
+    """Return a JSON with response the error message when an APIError is raised"""
+    app.logger.error(f"Unknown Exception: {str(err)}")
+    app.logger.debug(traceback.format_exc())
+    response = {"error": err.description, "message": ""}
+    if len(err.args) > 0:
+        response["message"] = err.args[0]
+        app.logger.error(f'{err.description}: {response["message"]}')
+    return jsonify(response), err.code
+
+
 @app.route('/')
 def index():
     app.logger.info('Fetching index.html')
@@ -67,7 +81,7 @@ def download_audio():
     except Exception as e:
         app.logger.error('Exception : {}'.format(str(e)))
         raise APIInternalServerError('Internal Server Error while downloading music')
-
+    app.logger.info('!!!!'+content)
     with open(content, 'rb') as f:
         audio_content = f.read()
 

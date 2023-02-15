@@ -292,3 +292,4 @@ poetry.toml
 [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
+.vercel

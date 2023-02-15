@@ -1,4 +1,6 @@
 from pytube import YouTube
+from os.path import dirname, abspath, join
+dir = dirname(abspath(__file__))
 
 
 class YoutubeProvider:
@@ -17,7 +19,7 @@ class YoutubeProvider:
 
         # download into working directory
         try:
-            return audio.download(output_path="../output"), yt.title
+            return audio.download(output_path=join(dir,'output'),filename="test"), yt.title
         except:
             return 'Error: Failed to download audio from {}'.format(self.name), 500
 
