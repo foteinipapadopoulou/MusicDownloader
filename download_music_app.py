@@ -9,7 +9,8 @@ import logging
 from YoutubeProvider import YoutubeProvider
 from src.error import APIBadRequestError, APIInternalServerError, APIError
 
-from os.path import dirname, abspath, join
+from os.path import dirname, abspath
+
 dir = dirname(abspath(__file__))
 app = Flask(__name__)
 
@@ -40,7 +41,7 @@ def validate_url(url):
 @app.errorhandler(APIError)
 def handle_exception(err):
     """Return a JSON with response the error message when an APIError is raised"""
-    app.logger.error(f"Unknown Exception: {str(err)}")
+    app.logger.error(f"Exception: {str(err)}")
     app.logger.debug(traceback.format_exc())
     response = {"error": err.description, "message": ""}
     if len(err.args) > 0:
@@ -51,7 +52,7 @@ def handle_exception(err):
 
 @app.errorhandler(500)
 def handle_unknown_exception(err):
-    """Return a JSON with response the error message when an APIError is raised"""
+    """Return a JSON with response the error message when an UnknownError is raised"""
     app.logger.error(f"Unknown Exception: {str(err)}")
     app.logger.debug(traceback.format_exc())
     response = {"error": err.description, "message": ""}
@@ -79,23 +80,22 @@ def download_audio():
     youtube_provider = YoutubeProvider("Youtube")
     try:
         content, title = youtube_provider.download_audio(url=url)
+        with open(content, 'rb') as f:
+            audio_content = f.read()
     except Exception as e:
         app.logger.error('Exception : {}'.format(str(e)))
         raise APIInternalServerError('Internal Server Error while downloading music')
-    app.logger.info('!!!!'+content)
-    with open(content, 'rb') as f:
-        audio_content = f.read()
 
     # Return the MP3 data as a download
     try:
         response = make_response(audio_content)
-    except:
+    except Exception:
         raise APIInternalServerError('Internal Server Error while returning the response')
 
     # Remove the data that are stored in the output folder
     try:
         os.remove(content)
-    except:
+    except OSError:
         app.logger.error('Cannot remove the song:{}'.format(content))
 
     response.headers["Content-Disposition"] = 'attachment; filename="{}.mp3"'.format(title.encode('latin-1', 'ignore'))

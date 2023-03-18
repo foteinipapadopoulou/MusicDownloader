@@ -1,6 +1,6 @@
 from pytube import YouTube
-from os.path import dirname, abspath, join
-dir = dirname(abspath(__file__))
+
+from src.error import APIInternalServerError
 
 
 class YoutubeProvider:
@@ -14,14 +14,9 @@ class YoutubeProvider:
             # accessing audio streams of YouTube obj.(first one, more available)
             audio = yt.streams.filter(only_audio=True).first()
             # downloading a video would be: stream = yt.streams.first()
-        except:
-            return 'Error: Failed to fetch url {}'.format(url), 500
-
-        # download into working directory
-        try:
             return audio.download(), yt.title
-        except:
-            return 'Error: Failed to download audio from {}'.format(self.name), 500
+        except Exception as e:
+            raise APIInternalServerError('Internal Server Error while downloading music {}'.format(str(e)))
 
     def get_youtube_url_info(self, url):
         try:
