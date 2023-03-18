@@ -3,7 +3,7 @@ This is a simple music downloader application created using Flask(Python), JavaS
 Currently only youtube URLs are supported.
 
 ## Screenshot 📷
-[screenshot of the music downloader app](/screenshot.png?raw=true "Music Downloader App")
+![screenshot of the music downloader app](/screenshot.png?raw=true "Music Downloader App")
 
 ## Access the Application 🔗
 You can access the deployed application at the following URL:
