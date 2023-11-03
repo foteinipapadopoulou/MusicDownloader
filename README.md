@@ -20,9 +20,8 @@ You can access the deployed application at the following URL:
 7. Access the application by opening a web browser and navigating to http://localhost:5000.
 
 ## Usage 📝
-Enter the name of the song you want to download in the search bar.
-Click the "Search" button.
-Choose the desired search result and click the "Download" button.
+Copy Paste the YouTube URL of the song you want to download in the text bar.
+Check if the song is the desired to be downloaded and click the "Download" button.
 The song will be downloaded to your device.
 
 ## Contributing 👨‍💻
