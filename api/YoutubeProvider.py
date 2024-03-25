@@ -1,6 +1,6 @@
 from pytube import YouTube
 
-from src.error import APIInternalServerError
+from api.error import APIInternalServerError
 
 
 class YoutubeProvider:

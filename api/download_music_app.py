@@ -7,7 +7,7 @@ import os
 import logging
 
 from YoutubeProvider import YoutubeProvider
-from src.error import APIBadRequestError, APIInternalServerError, APIError
+from api.error import APIBadRequestError, APIInternalServerError, APIError
 
 from os.path import dirname, abspath
 

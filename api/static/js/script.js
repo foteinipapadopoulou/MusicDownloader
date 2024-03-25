@@ -86,7 +86,9 @@ downloadForm.addEventListener("submit", function(event) {
              //Get the title of song
              let disposition = xhr.getResponseHeader("Content-Disposition");
              let songName = DEFAULT_SONG_TITLE;
+
              if (songTitleToBeDownloaded.textContent) {
+
                  songName = `${songTitleToBeDownloaded.textContent}.mp3`;
              } else {
                  songName = getAttachmentFilenameFromDisposition(disposition);
