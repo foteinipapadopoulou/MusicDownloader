@@ -65,7 +65,7 @@ def handle_unknown_exception(err):
 @app.route('/')
 def index():
     app.logger.info('Fetching index.html')
-    return render_template('index.html')
+    return render_template('/api/templates/index.html')
 
 
 @app.route('/download_audio', methods=["POST"])
