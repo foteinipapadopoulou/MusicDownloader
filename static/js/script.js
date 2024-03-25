@@ -76,6 +76,7 @@ downloadForm.addEventListener("submit", function(event) {
     xhr.open("POST", "/download_audio");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.responseType = "blob";
+    xhr.timeout = 20000;
 
     xhr.addEventListener('load', function (e) {
          progressElement.classList.add('d-none');
