@@ -8,7 +8,8 @@ Currently only youtube URLs are supported.
 ## Access the Application 🔗
 You can access the deployed application at the following URL:
 
-* [https://music-downloader-d2po.onrender.com](https://music-downloader-d2po.onrender.com)
+* [https://musicdownloader-sldh.onrender.com](https://musicdownloader-sldh.onrender.com)
+
 
 ## How to Install 🚀
 1. Clone this repository using the command `git clone https://github.com/foteinipapadopoulou/MusicDownloader.git`.
